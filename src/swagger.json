@@ -1,0 +1,148 @@
+{
+   "openapi": "3.0.0",
+   "info": {
+      "title": "Conceitos do SOLID",
+      "description": "API utilizando os conceitos do SOLID",
+      "version": "1.0.0",
+      "contact": {
+         "name": "André Grillo",
+         "email": "andrell.grillo@gmail.com"
+      }
+   },
+   "paths": {
+      "/": {
+         "post": {
+            "tags": ["User"],
+            "summary": "Create a user",
+            "description": "Create a new user",
+            "requestBody":{
+               "content": {
+                  "application/json":{
+                     "schema": {
+                        "type": "object",
+                        "properties": {
+                           "name": { "type": "string"},
+                           "email":{ "type": "string"}
+                        },
+                        "example": {
+                           "name": "John Doe",
+                           "email": "jd@jdoe.com"
+                        }
+                     }
+                  }
+               }
+            },
+            "responses": {
+               "201": {
+                  "description": "Created"
+               },
+               "400": {
+                  "description": "User not created"
+               }
+            }
+         },
+         "get":{
+            "tags": ["User"],
+            "summary": "List all users",
+            "description": "List all users",
+            "responses": {
+               "200": {
+                  "description": "Success",
+                  "content": {
+                     "application/json":{
+                        "schema":{
+                           "type": "array",
+                           "items":{
+                              "type": "object",
+                              "properties": {
+                                 "id":{ "type": "string"},
+                                 "name":{ "type": "string" },
+                                 "email":{ "type": "string"},
+                                 "admin":{ "type": "boolean"},
+                                 "created_at":{ "type": "string"},
+                                 "updated_at": { "type": "string"}
+                              }
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      },
+      "/:user_id":{
+         "get":{
+            "tags": ["User"],
+            "summary": "User profile",
+            "description": "Show user profile",
+            "parameters": [{
+               "name": "user_id",
+               "in": "path",
+               "required": true
+            }],
+            "responses": {
+               "200":{
+                  "description": "Success",
+                  "content": {
+                     "application/json":{
+                        "schema":{
+                           "type": "object",
+                           "properties": {
+                              "id":{"type": "string"},
+                              "name":{"type": "string"},
+                              "email":{ "type": "string"},
+                              "admin":{ "type": "boolean"},
+                              "created_at":{ "type": "string"},
+                              "updated_at": { "type": "string"}
+                           }
+                        }
+                     }
+                  }
+               },
+               "404":{
+                  "description": "User not found"
+               }
+            }
+         }
+      },
+      "/:user_id/admin":{
+         "patch":{
+            "tags": ["User"],
+            "summary": "Turn User Admin",
+            "description": "Update user to admin",
+            "parameters": [{
+               "name": "user_id",
+               "in": "path",
+               "required": true
+            },{
+               "name": "admin",
+               "in": "path"
+            }
+         ],
+            "responses": {
+               "200":{
+                  "description": "Success",
+                  "content": {
+                     "application/json":{
+                        "schema":{
+                           "type": "object",
+                           "properties": {
+                              "id":{"type": "string"},
+                              "name":{"type": "string"},
+                              "email":{ "type": "string"},
+                              "admin":{ "type": "boolean"},
+                              "created_at":{ "type": "string"},
+                              "updated_at": { "type": "string"}
+                           }
+                        }
+                     }
+                  }
+               },
+               "404":{
+                  "description": "User not found"
+               }
+            }
+         }
+      }
+   }
+}
